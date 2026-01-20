@@ -345,10 +345,10 @@ tool_screen() {
       2)
         if [[ "$st" != "INSTALADA" ]]; then
           echo -e "${RED}[x]${NC} Instale primeiro (opção 1)."
+          read -rp "ENTER..." _
         else
           run_tool "$dir" "$run" "$name" || true
         fi
-        read -rp "ENTER..." _
         ;;
       3)
         open_tool_dir "$dir" || true
