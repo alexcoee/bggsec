@@ -2,9 +2,7 @@
 
 
 
-<img width="531" height="407" alt="menu" src="https://github.com/user-attachments/assets/549ee98a-cc14-4d5f-9d69-f3d9ff6bbae4" />
-
-
+<img width="528" height="408" alt="menu" src="https://github.com/user-attachments/assets/422fc65f-2ee8-47f2-af8d-b59bbc864046" />
 
 
 > Projeto educacional, ideal para estudantes de CyberSecurity e para quem quer manter o ambiente de pentest organizado.
