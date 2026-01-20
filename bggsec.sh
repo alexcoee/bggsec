@@ -34,17 +34,23 @@ repo_is_git_cloneable() {
   return 1
 }
 
+
 banner() {
   clear
-  echo -e "${PURPLE}   ____  ______ ______  _____ ______ _____ "
-  echo -e "  / __ )/ ____// ____/ / ___// ____// ___/ "
-  echo -e " / __  / / __ / / __   \\__ \\/ __/   \\__ \\  "
-  echo -e "/ /_/ / /_/ // /_/ /  ___/ / /___  ___/ /  "
-  echo -e "/_____/\\____/ \\____/  /____/_____/ /____/   ${NC}"
-  echo -e "  ${GREEN}${APP_NAME}${NC} ${CYAN}${VERSION}${NC} | Tool Manager (wireless/Radio) | ${YELLOW}Git required${NC}"
+  echo -e "${PURPLE}"
+  echo "  ██████╗  ██████╗  ██████╗ ███████╗ ██████╗"
+  echo "  ██╔══██╗██╔════╝ ██╔════╝ ██╔════╝██╔════╝"
+  echo "  ██████╔╝██║  ███╗██║  ███╗███████╗██║     "
+  echo "  ██╔══██╗██║   ██║██║   ██║╚════██║██║     "
+  echo "  ██████╔╝╚██████╔╝╚██████╔╝███████║╚██████╗"
+  echo "  ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝ ╚═════╝"
+  echo -e "${NC}"
+  echo -e "  ${GREEN}${APP_NAME}${NC} ${CYAN}${VERSION}${NC}  |  Unified Tool Manager  |  ${YELLOW}Kali / Pentest${NC}"
   echo -e "  ------------------------------------------------------------"
   echo ""
 }
+
+
 
 # TSV: id, categoria, nome, dir, repo, run, desc
 tools_lines() {
