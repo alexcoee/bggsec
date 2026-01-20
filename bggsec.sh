@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# ---- Cores (verde e roxo) ----
+# ---- Cores - green and purple ----
 GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
 YELLOW='\033[1;33m'
@@ -298,8 +298,8 @@ installed_screen() {
 
     mkdir -p "$DOWNLOAD_DIR"
 
-    # Vamos montar um "mapa" de índice -> ID real
-    # Mostra: 1) [ID] Nome
+    # 
+    # Mostra: 1) ID/Nome
     local idx=0
     local ids=()
 
@@ -313,7 +313,7 @@ installed_screen() {
     done < <(tools_lines)
 
     echo ""
-    echo "Escolha um número para abrir a ferramenta."
+    echo "Selecione o ID da ferramenta para abrir."
     echo "  9) Voltar"
     echo "  0) Sair"
     echo ""
@@ -342,7 +342,7 @@ main_menu() {
   while true; do
     banner
     echo "Menu:"
-    echo "  1) Listar ferramentas"
+    echo "  1) Lista de ferramentas"
     echo "  2) Buscar por nome"
     echo "  3) Instalar/Atualizar tudo"
     echo "  4) Instalados"
@@ -350,7 +350,7 @@ main_menu() {
     echo "  5) Ajuda"
     echo "  0) Sair"
     echo ""
-    echo -e "${YELLOW}Dica:${NC} na lista/busca você pode digitar um ID para abrir detalhes."
+    echo -e "${YELLOW}Busca:${NC} digite o ID da ferramenta."
     echo ""
 
     read -rp "Escolha: " opt
@@ -365,7 +365,7 @@ main_menu() {
       5) help_screen ;;
       0) echo "Até a próxima!"; exit 0 ;;
       *)
-        # Extra: se o usuário digitar um ID diretamente no menu, abre
+        # mensagem de erro se não achar o ID
         if [[ "$opt" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$opt" || true)" ]]; then
           tool_screen "$opt" || true
         else
