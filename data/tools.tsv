@@ -65,3 +65,38 @@ id	categoria	nome	dir	repo	run	desc
 502	mesh	batman-adv	batman-adv	https://github.com/open-mesh-mirror/batman-adv.git	-	Implementação BATMAN-adv (kernel).
 503	mesh	batman-alfred	batman-alfred	https://github.com/nomaster/aur-batman-alfred.git	-	ALFRED (serviço auxiliar para BATMAN).
 504	radius	FreeRADIUS	freeradius	https://github.com/FreeRADIUS/freeradius-server.git	-	Servidor RADIUS para labs 802.1X/EAP.
+
+# =========================
+# Recon / Information (600–649)
+# =========================
+601	recon	AstraNmap	astranmap	https://github.com/Gameye98/AstraNmap.git	bash ./astranmap.sh	Wrapper com menu que acelera varreduras do nmap.
+602	recon	Red Hawk	red_hawk	https://github.com/Tuhinshubhra/RED_HAWK.git	php rhawk.php	Scanner web all-in-one (info + SQLi/LFI + whois).
+603	recon	LittleBrother	littlebrother	https://github.com/Lulz3xploit/LittleBrother.git	python3 LittleBrother.py	OSINT para pessoas (telefone, email, redes) usando fontes públicas.
+604	recon	Seeker	seeker	https://github.com/thewhiteh4t/seeker.git	python3 seeker.py --help	Captura coordenadas e dados via templates de phishing geolocalizados.
+605	recon	ReconDog	recondog	https://github.com/s0md3v/ReconDog.git	python3 dog.py	Menu CLI que junta múltiplos serviços de reconnaissance.
+606	recon	Nikto	nikto	https://github.com/sullo/nikto.git	perl nikto.pl -h	Scanner web clássico para encontrar falhas em servidores HTTP.
+
+# =========================
+# Web / Exploitation (700–749)
+# =========================
+701	web	RouterSploit	routersploit	https://github.com/threat9/routersploit.git	python3 rsf.py	Framework de exploits e pós-exploração focado em roteadores/IoT.
+702	web	Commix	commix	https://github.com/commixproject/commix.git	python3 commix.py --help	Testes automatizados de command injection em apps web.
+703	web	sqlmap	sqlmap	https://github.com/sqlmapproject/sqlmap.git	python3 sqlmap.py --help	Automação completa de SQL Injection e takeover de bancos.
+704	web	WhatWeb	whatweb	https://github.com/urbanadventurer/WhatWeb.git	./whatweb --help	Fingerprinting rápido de tecnologias e plugins em sites.
+705	web	Wfuzz	wfuzz	https://github.com/xmendez/wfuzz.git	python3 wfuzz.py --help	Fuzzer HTTP para bruteforce de diretórios, parâmetros e dados POST.
+
+# =========================
+# Phishing / Engenharia social (800–849)
+# =========================
+801	phishing	Zphisher	zphisher	https://github.com/htr-tech/zphisher.git	bash ./zphisher.sh	Pacote com dezenas de templates + tuneladores (ngrok, cloudflared).
+802	phishing	ShellPhish	shellphish	https://github.com/AbirHasan2005/ShellPhish.git	bash ./shellphish.sh	Automação de páginas phishing populares e entrega via túnel.
+803	phishing	HiddenEye	hiddeneye	https://github.com/DarkSecDevelopers/HiddenEye-Legacy.git	python3 HiddenEye.py	Phishing + keylogger + captura de IP/Geo em único painel.
+804	phishing	BlackEye	blackeye	https://github.com/An0nUD4Y/blackeye.git	bash ./blackeye.sh	Clone de sites conhecidos para fins educacionais de engenharia social.
+805	phishing	SayCheese	saycheese	https://github.com/hangetzzu/saycheese.git	bash ./saycheese.sh	Cria página para capturar fotos da webcam diretamente do navegador.
+
+# =========================
+# Passwords / Wordlists / Hashes (900–949)
+# =========================
+901	hash	Hash-Buster	hash-buster	https://github.com/s0md3v/Hash-Buster.git	python3 hash.py	Identifica tipo de hash e tenta quebra via APIs/dicionários online.
+902	wordlist	GoblinWordGenerator	goblinword	https://github.com/UndeadSec/GoblinWordGenerator.git	python3 goblin.py --help	Gera wordlists customizadas com base em padrões e mutações.
+903	xss	XSStrike	xsstrike	https://github.com/s0md3v/XSStrike.git	python3 xsstrike.py --help	Testes inteligentes de XSS (payload discovery + bypass de filtros).
