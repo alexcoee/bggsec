@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# =========================
-# bggsec - unified tool manager
-# =========================
-
 # ---- Cores (verde e roxo) ----
 GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
@@ -14,7 +10,7 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 APP_NAME="bggsec"
-VERSION="v0.2"
+VERSION="v0.3"
 
 DOWNLOAD_DIR="${DOWNLOAD_DIR:-bggsec-tools}"
 TOOLS_FILE="${TOOLS_FILE:-./data/tools.tsv}"
@@ -45,8 +41,9 @@ banner() {
   echo -e " / __  / / __ / / __   \\__ \\/ __/   \\__ \\  "
   echo -e "/ /_/ / /_/ // /_/ /  ___/ / /___  ___/ /  "
   echo -e "/_____/\\____/ \\____/  /____/_____/ /____/   ${NC}"
-  echo -e "  ${GREEN}${APP_NAME}${NC} ${CYAN}${VERSION}${NC} | unified tool manager | ${YELLOW}git required${NC}"
+  echo -e "  ${GREEN}${APP_NAME}${NC} ${CYAN}${VERSION}${NC} | Tool Manager (wireless/Radio) | ${YELLOW}Git required${NC}"
   echo -e "  ------------------------------------------------------------"
+  echo ""
 }
 
 # TSV: id, categoria, nome, dir, repo, run, desc
@@ -69,20 +66,6 @@ tool_status() {
   local dir="$1"
   local dest="${DOWNLOAD_DIR}/${dir}"
   [[ -d "$dest/.git" ]] && echo "INSTALADA" || echo "NAO_INSTALADA"
-}
-
-count_installed() {
-  mkdir -p "$DOWNLOAD_DIR"
-  local n=0
-  while IFS=$'\t' read -r id cat name dir repo run desc; do
-    [[ -n "$dir" ]] || dir="$(safe_dirname "$name")"
-    [[ -d "${DOWNLOAD_DIR}/${dir}/.git" ]] && n=$((n+1))
-  done < <(tools_lines)
-  echo "$n"
-}
-
-count_total() {
-  tools_lines | wc -l | tr -d ' '
 }
 
 install_tool_by_line() {
@@ -133,7 +116,6 @@ open_tool_dir() {
   local dest="${DOWNLOAD_DIR}/${dir}"
   [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta não instalada."; return 1; }
   echo -e "${CYAN}Pasta:${NC} $dest"
-  # Não tenta abrir GUI (WSL/SSH). Só mostra path.
 }
 
 run_tool() {
@@ -152,30 +134,23 @@ run_tool() {
   (cd "$dest" && bash -c "$run_cmd")
 }
 
-list_view() {
-  local mode="${1:-all}"   # all | installed
+list_all_tools() {
   banner
-  local installed total
-  installed="$(count_installed)"
-  total="$(count_total)"
-  echo -e "  Status: ${GREEN}${installed}${NC} instaladas / ${CYAN}${total}${NC} total"
-  echo ""
   echo -e "${YELLOW}ID | Cat | Nome | Status${NC}"
   echo "-----------------------------------------------"
+  mkdir -p "$DOWNLOAD_DIR"
 
   while IFS=$'\t' read -r id cat name dir repo run desc; do
     [[ -n "$dir" ]] || dir="$(safe_dirname "$name")"
     local st
     st="$(tool_status "$dir")"
-    [[ "$mode" == "installed" && "$st" != "INSTALADA" ]] && continue
     printf "%s | %s | %s | %s\n" "$id" "$cat" "$name" "$st"
   done < <(tools_lines)
-
   echo ""
-  echo -e "${CYAN}Comandos:${NC} digite um ID | l=lista | li=instaladas | s termo=buscar | q=sair"
+  read -rp "ENTER para voltar..." _
 }
 
-search_view() {
+search_tools() {
   local q="$1"
   banner
   echo -e "${YELLOW}Busca:${NC} ${CYAN}${q}${NC}"
@@ -185,9 +160,65 @@ search_view() {
     $3 ~ q || $2 ~ q || $7 ~ q {printf "%s | %s | %s\n", $1, $2, $3}
   '
   echo ""
-  echo -e "${CYAN}Digite um ID para abrir a ferramenta, ou ENTER para voltar.${NC}"
+  read -rp "Digite um ID para abrir (ou ENTER para voltar): " pick
+  [[ -z "$pick" ]] && return 0
+  if [[ "$pick" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$pick" || true)" ]]; then
+    tool_screen "$pick" || true
+  else
+    echo -e "${RED}[x]${NC} ID inválido."
+    read -rp "ENTER..." _
+  fi
 }
 
+help_screen() {
+  banner
+  cat <<EOF
+${GREEN}${APP_NAME}${NC} ajuda
+
+- Menu por opções (1..5).
+- Você pode abrir uma ferramenta digitando o ID quando estiver em:
+  - Listagem
+  - Busca
+  - Instalados
+
+Dica:
+- No WSL/Windows, ferramentas wireless (monitor mode/injeção) podem não funcionar.
+
+EOF
+  read -rp "ENTER para voltar..." _
+}
+
+install_update_all() {
+  banner
+  echo -e "${YELLOW}Isso vai tentar clonar/atualizar TODAS as ferramentas.${NC}"
+  read -rp "Confirmar? [s/N]: " conf
+  [[ "${conf,,}" == "s" || "${conf,,}" == "sim" ]] || return 0
+
+  need_cmd git
+  mkdir -p "$DOWNLOAD_DIR"
+
+  while IFS=$'\t' read -r id cat name dir repo run desc; do
+    [[ -n "$dir" ]] || dir="$(safe_dirname "$name")"
+    local dest="${DOWNLOAD_DIR}/${dir}"
+
+    echo -e "${CYAN}[*]${NC} ${name}"
+    if repo_is_git_cloneable "$repo"; then
+      if [[ -d "$dest/.git" ]]; then
+        git -C "$dest" pull --rebase --autostash || echo -e "${RED}[x]${NC} Falhou: $name"
+      else
+        git clone "$repo" "$dest" || echo -e "${RED}[x]${NC} Falhou: $name"
+      fi
+    else
+      echo -e "${RED}[x]${NC} Repo não clonável (sem .git): ${repo}"
+    fi
+    echo ""
+  done < <(tools_lines)
+
+  echo -e "${GREEN}[+]${NC} Finalizado."
+  read -rp "ENTER para voltar..." _
+}
+
+# --- Tela da ferramenta (detalhes + executar) ---
 tool_screen() {
   local id="$1"
   local line
@@ -220,7 +251,7 @@ tool_screen() {
     echo "  2) Executar"
     echo "  3) Mostrar pasta"
     echo "  4) Remover"
-    echo "  9) Voltar (lista)"
+    echo "  9) Voltar"
     echo "  0) Sair"
     echo ""
 
@@ -258,59 +289,92 @@ tool_screen() {
   done
 }
 
-main_loop() {
-  need_cmd awk
-  mkdir -p "$DOWNLOAD_DIR"
-
-  local view="all"  # all | installed
-  list_view "$view"
-
+# --- Tela Instalados: lista numerada só dos baixados ---
+installed_screen() {
   while true; do
-    echo -n "> "
-    read -r input || exit 0
-    input="${input#"${input%%[![:space:]]*}"}"   # trim left
-    input="${input%"${input##*[![:space:]]}"}"   # trim right
+    banner
+    echo -e "${YELLOW}Instalados:${NC}"
+    echo "-----------------------------------------------"
 
-    case "$input" in
-      q|quit|exit)
-        echo "Até a próxima!"
-        exit 0
-        ;;
-      l)
-        view="all"
-        list_view "$view"
-        ;;
-      li)
-        view="installed"
-        list_view "$view"
-        ;;
-      "")
-        # Enter só redesenha
-        list_view "$view"
-        ;;
-      s\ *)
-        local q="${input#s }"
-        [[ -n "$q" ]] || { list_view "$view"; continue; }
-        search_view "$q"
-        read -rp "> " pick
-        pick="${pick#"${pick%%[![:space:]]*}"}"
-        pick="${pick%"${pick##*[![:space:]]}"}"
-        if [[ "$pick" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$pick" || true)" ]]; then
-          tool_screen "$pick" || true
-        fi
-        list_view "$view"
-        ;;
+    mkdir -p "$DOWNLOAD_DIR"
+
+    # Vamos montar um "mapa" de índice -> ID real
+    # Mostra: 1) [ID] Nome
+    local idx=0
+    local ids=()
+
+    while IFS=$'\t' read -r id cat name dir repo run desc; do
+      [[ -n "$dir" ]] || dir="$(safe_dirname "$name")"
+      if [[ -d "${DOWNLOAD_DIR}/${dir}/.git" ]]; then
+        idx=$((idx+1))
+        ids+=("$id")
+        printf "%d) [%s] %s\n" "$idx" "$id" "$name"
+      fi
+    done < <(tools_lines)
+
+    echo ""
+    echo "Escolha um número para abrir a ferramenta."
+    echo "  9) Voltar"
+    echo "  0) Sair"
+    echo ""
+
+    read -rp "Escolha: " opt
+    case "$opt" in
+      9) return 0 ;;
+      0) echo "Até a próxima!"; exit 0 ;;
       *)
-        if [[ "$input" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$input" || true)" ]]; then
-          tool_screen "$input" || true
-          list_view "$view"
+        if [[ "$opt" =~ ^[0-9]+$ ]] && (( opt >= 1 && opt <= idx )); then
+          local real_id="${ids[$((opt-1))]}"
+          tool_screen "$real_id" || true
         else
-          echo -e "${RED}[x]${NC} Comando inválido."
-          echo -e "${CYAN}Use:${NC} ID | l | li | s termo | q"
+          echo -e "${RED}[x]${NC} Opção inválida."
+          read -rp "ENTER..." _
         fi
         ;;
     esac
   done
 }
 
-main_loop
+main_menu() {
+  need_cmd awk
+  mkdir -p "$DOWNLOAD_DIR"
+
+  while true; do
+    banner
+    echo "Menu:"
+    echo "  1) Listar ferramentas"
+    echo "  2) Buscar por nome"
+    echo "  3) Instalar/Atualizar tudo"
+    echo "  4) Instalados"
+    echo ""
+    echo "  5) Ajuda"
+    echo "  0) Sair"
+    echo ""
+    echo -e "${YELLOW}Dica:${NC} na lista/busca você pode digitar um ID para abrir detalhes."
+    echo ""
+
+    read -rp "Escolha: " opt
+    case "$opt" in
+      1) list_all_tools ;;
+      2)
+        read -rp "Termo de busca: " q
+        [[ -n "$q" ]] && search_tools "$q"
+        ;;
+      3) install_update_all ;;
+      4) installed_screen ;;
+      5) help_screen ;;
+      0) echo "Até a próxima!"; exit 0 ;;
+      *)
+        # Extra: se o usuário digitar um ID diretamente no menu, abre
+        if [[ "$opt" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$opt" || true)" ]]; then
+          tool_screen "$opt" || true
+        else
+          echo -e "${RED}[x]${NC} Opção inválida."
+          read -rp "ENTER..." _
+        fi
+        ;;
+    esac
+  done
+}
+
+main_menu
