@@ -198,13 +198,24 @@ run_tool() {
   echo -e "${CYAN}[*]${NC} Executando em ${dest}"
   echo -e "${YELLOW}[*]${NC} Comando: ${run_cmd}"
 
-  if launch_new_terminal "$dest" "$run_cmd" "$name"; then
-    echo -e "${GREEN}[+]${NC} Terminal externo aberto (${name})."
-    return 0
+  local spawn_requested=0
+  if [[ "${BGGSEC_AUTOSPAWN_TERM:-0}" == "1" ]]; then
+    spawn_requested=1
+  fi
+  if [[ -n "${NEW_TERMINAL_CMD:-}" ]]; then
+    spawn_requested=1
   fi
 
-  echo -e "${YELLOW}[!]${NC} Não encontrei um terminal gráfico/novo tab. Rodando inline."
-  echo -e "${YELLOW}[*]${NC} (CTRL+C para sair)"
+  if [[ "$spawn_requested" == "1" ]]; then
+    if launch_new_terminal "$dest" "$run_cmd" "$name"; then
+      echo -e "${GREEN}[+]${NC} Terminal externo aberto (${name})."
+      return 0
+    elif [[ "${BGGSEC_AUTOSPAWN_TERM:-0}" == "1" ]]; then
+      echo -e "${YELLOW}[!]${NC} Não consegui abrir novo terminal. Rodando inline."
+    fi
+  fi
+
+  echo -e "${YELLOW}[*]${NC} Ctrl+C para encerrar a ferramenta e voltar."
   echo ""
 
   (cd "$dest" && bash -c "$run_cmd")
