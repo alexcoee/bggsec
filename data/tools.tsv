@@ -1,49 +1,49 @@
-id	categoria	nome	dir	repo	desc
-1	wireless	Aircrack-ng	aircrack-ng	https://github.com/aircrack-ng/aircrack-ng.git	Suite clássica para auditoria Wi-Fi (monitoramento, injeção, captura e ataque a handshakes).
-2	wireless	Asleap	asleap	https://github.com/joswr1ght/asleap.git	Ferramenta para análise/ataques relacionados a LEAP (método antigo de autenticação).
-3	wireless	Airflood	airflood	https://github.com/Seabreg/airflood.git	Ferramentas/automação para ataques e testes em redes 802.11.
-4	wireless	Airgeddon	airgeddon	https://github.com/v1s1t0r1sh3r3/airgeddon.git	Framework bash com menu para auditoria Wi-Fi (recon, captura, ataques comuns).
-5	wireless	Airopy	airopy	https://github.com/Josue87/Airopy.git	Toolkit Python voltado a automação/ataques em Wi-Fi (uso educacional).
-6	wireless	Airoscript	airoscript	https://github.com/patrickhno/Airoscript.git	Script para facilitar uso do aircrack-ng (captura/ataques comuns).
-7	wireless	airpwn-ng	airpwn-ng	https://github.com/ICSec/airpwn-ng.git	Injeção de conteúdo/packets em redes Wi-Fi (ataques de substituição).
-8	wireless	aphopper	aphopper	https://github.com/BlackArch/aphopper.git	Script para alternar canais (channel hopping) durante monitoramento Wi-Fi.
-9	wireless	apnbf	apnbf	https://github.com/Seabreg/apnbf.git	Automação relacionada a AP/monitoramento/flood (uso em testes Wi-Fi).
-10	wireless	AtEar	atear	https://github.com/NORMA-Inc/AtEar.git	Ferramenta voltada a testes/ataques em protocolos wireless (uso educacional).
-11	wireless	Auto_EAP	auto_eap	https://github.com/Tylous/Auto_EAP.git	Automação para testes EAP/802.1X (ambientes autorizados).
-12	mesh	batctl	batctl	https://github.com/open-mesh-mirror/batctl.git	Utilitário de controle para BATMAN-adv (redes mesh).
-13	mesh	batman-adv	batman-adv	https://github.com/open-mesh-mirror/batman-adv.git	Implementação BATMAN-adv para redes mesh em nível de kernel (código fonte).
-14	mesh	batman-alfred	batman-alfred	https://github.com/nomaster/aur-batman-alfred.git	ALFRED (protocolo) usado com redes mesh BATMAN (pacote/receita).
-15	wireless	BeholderWifi	beholderwifi	https://github.com/nmurilo/BeholderWifi.git	Monitoramento/visualização de informações Wi-Fi (projeto de auditoria).
-16	wireless	BoopSuite	boopsuite	https://github.com/MisterBianco/BoopSuite.git	Extensões/automação (Boop) para fluxos comuns em testes e manipulação de requisições.
-17	bluetooth	Bluelog	bluelog	https://github.com/MS3FGX/Bluelog.git	Logger/scanner de Bluetooth (descoberta e registro de dispositivos).
-18	bluetooth	BlueMaho	bluemaho	https://github.com/zenware/bluemaho.git	Suite para auditoria Bluetooth (varredura e testes comuns).
-19	bluetooth	Bluepot	bluepot	https://github.com/andrewmichaelsmith/bluepot.git	Honeypot Bluetooth para detectar conexões e comportamento.
-20	bluetooth	BlueRanger	blueranger	https://github.com/BlackArch/blackarch/tree/master/packages/blueranger	Utilitário relacionado a Bluetooth (este link pode não ser clonável via .git).
-21	wireless	Bully	bully	https://github.com/aanarchyy/bully.git	Ferramenta de auditoria WPS (testes contra PIN/WPS em APs autorizados).
-22	wireless	cowpatty	cowpatty	https://github.com/roobixx/cowpatty.git	Ataques/dicionário contra WPA (pré-computação/handshake) em contexto autorizado.
-23	wireless	crackle	crackle	https://github.com/mikeryan/crackle.git	Auditoria WPA/WPA2 (historicamente voltada a cracking de chaves capturadas).
-24	wireless	create_ap	create_ap	https://github.com/oblique/create_ap.git	Cria ponto de acesso (AP) via hostapd/dnsmasq (útil para labs).
-25	wireless	eapmd5pass	eapmd5pass	https://github.com/joswr1ght/eapmd5pass.git	Ferramenta para testes EAP-MD5 (auditoria/recuperação em ambientes controlados).
-26	wireless	eaphammer	eaphammer	https://github.com/s0lst1c3/eaphammer.git	Framework para testes 802.1X/EAP (ex.: evil twin) em ambiente autorizado.
-27	wireless	Fern WiFi Cracker	fern-wifi-cracker	https://github.com/savio-code/fern-wifi-cracker.git	GUI voltada a auditoria/cracking Wi-Fi (uso educacional).
-28	wireless	Fluxion	fluxion	https://github.com/FluxionNetwork/fluxion.git	Framework de auditoria WPA/WPA2 com foco em ataques baseados em engenharia social (somente labs/autorizado).
-29	radius	FreeRADIUS	freeradius	https://github.com/FreeRADIUS/freeradius-server.git	Servidor RADIUS (útil para montar lab 802.1X/EAP e testar).
-30	wireless	Ghost Phisher	ghost-phisher	https://github.com/savio-code/ghost-phisher.git	Criação de AP falso / MITM em labs (ferramenta educacional).
-31	wireless	GISKismet	giskismet	https://github.com/xtr4nge/giskismet.git	Integra Kismet + GIS/DB para mapear redes e capturas.
-32	radio	gr-scan	gr-scan	https://github.com/briand/gr-scan.git	Scanner baseado em GNU Radio para sinais/rádio (labs/SDR).
-33	radio	kalibrate-rtl	kalibrate-rtl	https://github.com/steve-m/kalibrate-rtl.git	Calibração/scan de frequências usando RTL-SDR (uso em SDR).
-34	radio	KillerBee	killerbee	https://github.com/riverloopsec/killerbee.git	Framework para auditoria ZigBee/802.15.4 (captura/ataque em labs).
-35	wireless	Kismet	kismet	https://github.com/kismetwireless/kismet.git	Detector/sniffer wireless (Wi-Fi/BT/SDR dependendo do setup).
-36	wireless	mdk3	mdk3	https://github.com/wi-fi-analyzer/mdk3-master.git	Toolkit para testes 802.11 (flood/DoS e cenários de lab).
-37	nfc	mfcuk	mfcuk	https://github.com/nfc-tools/mfcuk.git	Auditoria MIFARE Classic (recuperação de chaves em cartões de lab).
-38	nfc	mfoc	mfoc	https://github.com/nfc-tools/mfoc.git	Auditoria MIFARE Classic (clássico em labs autorizados).
-39	nfc	mfterm	mfterm	https://github.com/4ZM/mfterm.git	Utilitário/terminal para interação com NFC/MIFARE (foco em lab).
-40	radio	Multimon-NG	multimon-ng	https://github.com/EliasOenal/multimon-ng.git	Decoder de sinais (pager/FSK/etc.) — muito usado com SDR em labs.
-41	wireless	PixieWPS	pixiewps	https://github.com/wiire-a/pixiewps.git	Implementação do ataque Pixie Dust contra WPS (somente autorizado).
-42	wireless	Reaver	reaver	https://github.com/inoryy/reaver.git	Auditoria WPS (PIN brute/online) em APs autorizados.
-43	bluetooth	redfang	redfang	https://github.com/daoc/redfang.git	Scanner Bluetooth (descoberta de dispositivos em intervalo de endereços).
-44	radio	RTLSDR-Scanner	rtlsdr-scanner	https://github.com/EarToEarOak/RTLSDR-Scanner.git	GUI para varredura/análise com RTL-SDR (waterfall/scan).
-45	bluetooth	Spooftooph	spooftooph	https://github.com/pwnieexpress/pwn_plug_sources.git	Ferramenta clássica para spoofing Bluetooth (nota: repo grande, pode mudar).
-46	wireless	Wifi-Honey	wifi-honey	https://github.com/samothrakes/wifi-honey.git	Honeypot Wi-Fi (simula AP para observar comportamentos em lab).
-47	wireless	Wifitap	wifitap	https://github.com/GDSSecurity/wifitap.git	Utilitário de auditoria Wi-Fi (captura/relay) em ambientes autorizados.
-48	wireless	Wifite	wifite	https://github.com/derv82/wifite.git	Automação para auditoria Wi-Fi (recon + ataques comuns) em modo lab/autorizado.
+id	categoria	nome	dir	repo	run	desc
+1	wireless	Aircrack-ng	aircrack-ng	https://github.com/aircrack-ng/aircrack-ng.git	-	Suite clássica para auditoria Wi-Fi (monitoramento, captura, análises). (Para uso real precisa hardware/driver adequado).
+2	wireless	Asleap	asleap	https://github.com/joswr1ght/asleap.git	-	Ferramenta para análise/ataques relacionados a LEAP (método antigo de autenticação).
+3	wireless	Airflood	airflood	https://github.com/Seabreg/airflood.git	-	Ferramentas/automação para testes em 802.11 (uso educacional).
+4	wireless	Airgeddon	airgeddon	https://github.com/v1s1t0r1sh3r3/airgeddon.git	bash ./airgeddon.sh	Framework bash com menu para auditoria Wi-Fi (recon, captura, ataques comuns).
+5	wireless	Airopy	airopy	https://github.com/Josue87/Airopy.git	python3 -m airopy	Toolkit Python voltado a automação/estudos em Wi-Fi (pode exigir deps).
+6	wireless	Airoscript	airoscript	https://github.com/patrickhno/Airoscript.git	bash ./airoscript.sh	Script para facilitar uso do aircrack-ng (fluxos comuns).
+7	wireless	airpwn-ng	airpwn-ng	https://github.com/ICSec/airpwn-ng.git	-	Injeção/substituição de tráfego em cenários Wi-Fi (lab/autorizado).
+8	wireless	aphopper	aphopper	https://github.com/BlackArch/aphopper.git	bash ./aphopper.sh	Script de channel hopping durante monitoramento Wi-Fi.
+9	wireless	apnbf	apnbf	https://github.com/Seabreg/apnbf.git	-	Automação relacionada a AP/monitoramento/flood (uso em testes Wi-Fi).
+10	wireless	AtEar	atear	https://github.com/NORMA-Inc/AtEar.git	-	Ferramenta voltada a testes em wireless (uso educacional).
+11	wireless	Auto_EAP	auto_eap	https://github.com/Tylous/Auto_EAP.git	-	Automação para testes EAP/802.1X (ambientes autorizados).
+12	mesh	batctl	batctl	https://github.com/open-mesh-mirror/batctl.git	-	Utilitário de controle para BATMAN-adv (redes mesh).
+13	mesh	batman-adv	batman-adv	https://github.com/open-mesh-mirror/batman-adv.git	-	Implementação BATMAN-adv para redes mesh (fonte/kernel).
+14	mesh	batman-alfred	batman-alfred	https://github.com/nomaster/aur-batman-alfred.git	-	ALFRED (protocolo) usado com redes mesh BATMAN (receita/pacote).
+15	wireless	BeholderWifi	beholderwifi	https://github.com/nmurilo/BeholderWifi.git	-	Monitoramento/visualização de informações Wi-Fi (projeto de auditoria).
+16	wireless	BoopSuite	boopsuite	https://github.com/MisterBianco/BoopSuite.git	-	Extensões/automação para manipulação de requisições (uso em labs).
+17	bluetooth	Bluelog	bluelog	https://github.com/MS3FGX/Bluelog.git	bluelog	Logger/scanner de Bluetooth (descoberta e registro de dispositivos).
+18	bluetooth	BlueMaho	bluemaho	https://github.com/zenware/bluemaho.git	-	Suite para auditoria Bluetooth (varredura e testes comuns).
+19	bluetooth	Bluepot	bluepot	https://github.com/andrewmichaelsmith/bluepot.git	python3 ./bluepot.py	Honeypot Bluetooth para detectar conexões e comportamento.
+20	bluetooth	BlueRanger	blueranger	https://github.com/BlackArch/blackarch/tree/master/packages/blueranger	-	Utilitário relacionado a Bluetooth (link pode não ser clonável via .git).
+21	wireless	Bully	bully	https://github.com/aanarchyy/bully.git	-	Auditoria WPS (lab/autorizado).
+22	wireless	cowpatty	cowpatty	https://github.com/roobixx/cowpatty.git	cowpatty -h	Ataques/dicionário contra WPA (uso autorizado).
+23	wireless	crackle	crackle	https://github.com/mikeryan/crackle.git	-	Auditoria WPA/WPA2 (uso em contexto autorizado).
+24	wireless	create_ap	create_ap	https://github.com/oblique/create_ap.git	./create_ap --help	Cria ponto de acesso via hostapd/dnsmasq (ótimo pra lab; no WSL pode não funcionar completo).
+25	wireless	eapmd5pass	eapmd5pass	https://github.com/joswr1ght/eapmd5pass.git	-	Testes EAP-MD5 (auditoria em ambientes controlados).
+26	wireless	eaphammer	eaphammer	https://github.com/s0lst1c3/eaphammer.git	-	Framework para testes 802.1X/EAP (evil twin etc.) em ambiente autorizado.
+27	wireless	Fern WiFi Cracker	fern-wifi-cracker	https://github.com/savio-code/fern-wifi-cracker.git	-	GUI de auditoria/cracking Wi-Fi (uso educacional).
+28	wireless	Fluxion	fluxion	https://github.com/FluxionNetwork/fluxion.git	-	Framework de auditoria WPA/WPA2 (somente labs/autorizado).
+29	radius	FreeRADIUS	freeradius	https://github.com/FreeRADIUS/freeradius-server.git	-	Servidor RADIUS (útil para montar lab 802.1X/EAP).
+30	wireless	Ghost Phisher	ghost-phisher	https://github.com/savio-code/ghost-phisher.git	-	Criação de AP falso / MITM em lab (ferramenta educacional).
+31	wireless	GISKismet	giskismet	https://github.com/xtr4nge/giskismet.git	-	Integra Kismet + GIS/DB para mapear redes e capturas.
+32	radio	gr-scan	gr-scan	https://github.com/briand/gr-scan.git	-	Scanner baseado em GNU Radio para SDR (labs).
+33	radio	kalibrate-rtl	kalibrate-rtl	https://github.com/steve-m/kalibrate-rtl.git	-	Calibração/scan usando RTL-SDR (SDR).
+34	radio	KillerBee	killerbee	https://github.com/riverloopsec/killerbee.git	-	Framework para auditoria ZigBee/802.15.4 (labs).
+35	wireless	Kismet	kismet	https://github.com/kismetwireless/kismet.git	kismet --help	Detector/sniffer wireless (ajuda funciona mesmo sem interface no WSL).
+36	wireless	mdk3	mdk3	https://github.com/wi-fi-analyzer/mdk3-master.git	-	Toolkit para testes 802.11 (flood/DoS) em lab.
+37	nfc	mfcuk	mfcuk	https://github.com/nfc-tools/mfcuk.git	mfcuk -h	Auditoria MIFARE Classic (lab).
+38	nfc	mfoc	mfoc	https://github.com/nfc-tools/mfoc.git	mfoc -h	Auditoria MIFARE Classic (lab).
+39	nfc	mfterm	mfterm	https://github.com/4ZM/mfterm.git	-	Utilitário/terminal para interação com NFC/MIFARE (lab).
+40	radio	Multimon-NG	multimon-ng	https://github.com/EliasOenal/multimon-ng.git	multimon-ng -h	Decoder de sinais (pager/FSK/etc.) — bom pra testar rápido.
+41	wireless	PixieWPS	pixiewps	https://github.com/wiire-a/pixiewps.git	pixiewps -h	Ataque Pixie Dust contra WPS (somente autorizado).
+42	wireless	Reaver	reaver	https://github.com/inoryy/reaver.git	reaver -h	Auditoria WPS (somente autorizado).
+43	bluetooth	redfang	redfang	https://github.com/daoc/redfang.git	redfang -h	Scanner Bluetooth (descoberta em range de endereços).
+44	radio	RTLSDR-Scanner	rtlsdr-scanner	https://github.com/EarToEarOak/RTLSDR-Scanner.git	-	GUI para varredura/análise com RTL-SDR (pode exigir deps/GUI).
+45	bluetooth	Spooftooph	spooftooph	https://github.com/pwnieexpress/pwn_plug_sources.git	-	Spoofing Bluetooth (repo grande; pode exigir ajustes).
+46	wireless	Wifi-Honey	wifi-honey	https://github.com/samothrakes/wifi-honey.git	-	Honeypot Wi-Fi (lab).
+47	wireless	Wifitap	wifitap	https://github.com/GDSSecurity/wifitap.git	-	Utilitário de auditoria Wi-Fi (captura/relay) em ambiente autorizado.
+48	wireless	Wifite	wifite	https://github.com/derv82/wifite.git	wifite -h	Automação de auditoria Wi-Fi (no WSL pode falhar por falta de monitor mode).
