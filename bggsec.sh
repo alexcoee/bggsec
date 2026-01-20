@@ -124,9 +124,72 @@ open_tool_dir() {
   echo -e "${CYAN}Pasta:${NC} $dest"
 }
 
+launch_new_terminal() {
+  local dest="$1"
+  local run_cmd="$2"
+  local label="${3:-Ferramenta}"
+
+  local payload='cd "$BGGSEC_DEST" && echo -e "\n[BGGSEC] Rodando: $BGGSEC_TOOL_NAME\n" && eval "$BGGSEC_RUN_CMD"; echo ""; read -rp "ENTER para fechar esta aba..." _'
+  local -a env_payload=(
+    BGGSEC_DEST="$dest"
+    BGGSEC_RUN_CMD="$run_cmd"
+    BGGSEC_TOOL_NAME="$label"
+    BGGSEC_PAYLOAD="$payload"
+  )
+
+  if [[ -n "${NEW_TERMINAL_CMD:-}" ]]; then
+    "${env_payload[@]}" bash -lc "$NEW_TERMINAL_CMD"
+    return $?
+  fi
+
+  if [[ -n "${TMUX:-}" ]] && command -v tmux >/dev/null 2>&1; then
+    "${env_payload[@]}" tmux new-window -n "$label" "bash -lc '$payload'"
+    return 0
+  fi
+
+  if command -v gnome-terminal >/dev/null 2>&1; then
+    "${env_payload[@]}" gnome-terminal -- bash -lc "$payload" >/dev/null 2>&1 &
+    disown || true
+    return 0
+  fi
+
+  if command -v xfce4-terminal >/dev/null 2>&1; then
+    "${env_payload[@]}" xfce4-terminal --title="$label" -e "bash -lc '$payload'" >/dev/null 2>&1 &
+    disown || true
+    return 0
+  fi
+
+  if command -v konsole >/dev/null 2>&1; then
+    "${env_payload[@]}" konsole --new-tab -p tabtitle="$label" -e bash -lc "$payload" >/dev/null 2>&1 &
+    disown || true
+    return 0
+  fi
+
+  if command -v x-terminal-emulator >/dev/null 2>&1; then
+    "${env_payload[@]}" x-terminal-emulator -T "$label" -e bash -lc "$payload" >/dev/null 2>&1 &
+    disown || true
+    return 0
+  fi
+
+  if command -v xterm >/dev/null 2>&1; then
+    "${env_payload[@]}" xterm -T "$label" -e bash -lc "$payload" >/dev/null 2>&1 &
+    disown || true
+    return 0
+  fi
+
+  if command -v wt.exe >/dev/null 2>&1; then
+    "${env_payload[@]}" wt.exe -w 0 nt --title "$label" wsl bash -lc "$payload" >/dev/null 2>&1 &
+    disown || true
+    return 0
+  fi
+
+  return 1
+}
+
 run_tool() {
   local dir="$1"
   local run_cmd="$2"
+  local name="${3:-Ferramenta}"
 
   local dest="${DOWNLOAD_DIR}/${dir}"
   [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta não instalada."; return 1; }
@@ -134,6 +197,13 @@ run_tool() {
 
   echo -e "${CYAN}[*]${NC} Executando em ${dest}"
   echo -e "${YELLOW}[*]${NC} Comando: ${run_cmd}"
+
+  if launch_new_terminal "$dest" "$run_cmd" "$name"; then
+    echo -e "${GREEN}[+]${NC} Terminal externo aberto (${name})."
+    return 0
+  fi
+
+  echo -e "${YELLOW}[!]${NC} Não encontrei um terminal gráfico/novo tab. Rodando inline."
   echo -e "${YELLOW}[*]${NC} (CTRL+C para sair)"
   echo ""
 
@@ -276,7 +346,7 @@ tool_screen() {
         if [[ "$st" != "INSTALADA" ]]; then
           echo -e "${RED}[x]${NC} Instale primeiro (opção 1)."
         else
-          run_tool "$dir" "$run" || true
+          run_tool "$dir" "$run" "$name" || true
         fi
         read -rp "ENTER..." _
         ;;
