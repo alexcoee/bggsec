@@ -12,7 +12,15 @@ NC='\033[0m'
 APP_NAME="bggsec"
 VERSION="v0.3"
 
-DOWNLOAD_DIR="${DOWNLOAD_DIR:-bggsec-tools}"
+if [[ -z "${DOWNLOAD_DIR:-}" ]]; then
+  for win_path in /mnt/c /c /cygdrive/c; do
+    if [[ -d "$win_path" && -w "$win_path" ]]; then
+      DOWNLOAD_DIR="$win_path"
+      break
+    fi
+  done
+  DOWNLOAD_DIR="${DOWNLOAD_DIR:-bggsec-tools}"
+fi
 TOOLS_FILE="${TOOLS_FILE:-./data/tools.tsv}"
 
 die() { echo -e "${RED}[x]${NC} $*" >&2; exit 1; }
@@ -24,6 +32,24 @@ safe_dirname() {
   s="${s// /_}"
   s="$(echo "$s" | tr -cd '[:alnum:]_.-')"
   echo "$s"
+}
+
+format_path_for_display() {
+  local path="$1"
+  if command -v wslpath >/dev/null 2>&1; then
+    local win
+    if win="$(wslpath -w "$path" 2>/dev/null)"; then
+      printf "%s" "$win"
+      return
+    fi
+  elif command -v cygpath >/dev/null 2>&1; then
+    local win
+    if win="$(cygpath -w "$path" 2>/dev/null)"; then
+      printf "%s" "$win"
+      return
+    fi
+  fi
+  printf "%s" "$path"
 }
 
 repo_is_git_cloneable() {
@@ -101,7 +127,7 @@ install_tool_by_line() {
   fi
 
   echo -e "${GREEN}[+]${NC} Pronto: ${name}"
-  echo -e "${CYAN}    Pasta:${NC} $dest"
+  echo -e "${CYAN}    Pasta:${NC} $(format_path_for_display "$dest")"
 }
 
 remove_tool_dir() {
@@ -122,7 +148,7 @@ open_tool_dir() {
   local dir="$1"
   local dest="${DOWNLOAD_DIR}/${dir}"
   [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta não instalada."; return 1; }
-  echo -e "${CYAN}Pasta:${NC} $dest"
+  echo -e "${CYAN}Pasta:${NC} $(format_path_for_display "$dest")"
 }
 
 run_tool() {
@@ -133,7 +159,7 @@ run_tool() {
   [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta não instalada."; return 1; }
   [[ -n "$run_cmd" && "$run_cmd" != "-" ]] || { echo -e "${RED}[x]${NC} Sem comando de execução definido."; return 1; }
 
-  echo -e "${CYAN}[*]${NC} Executando em ${dest}"
+  echo -e "${CYAN}[*]${NC} Executando em $(format_path_for_display "$dest")"
   echo -e "${YELLOW}[*]${NC} Comando: ${run_cmd}"
   echo -e "${YELLOW}[*]${NC} (CTRL+C para sair)"
   echo ""
@@ -251,7 +277,7 @@ tool_screen() {
     echo ""
     echo -e "${YELLOW}Repo:${NC} ${CYAN}${repo}${NC}"
     echo -e "${YELLOW}Run:${NC}  ${CYAN}${run}${NC}"
-    echo -e "${YELLOW}Dir:${NC}  ${CYAN}${dest}${NC}"
+    echo -e "${YELLOW}Dir:${NC}  ${CYAN}$(format_path_for_display "$dest")${NC}"
     echo ""
     echo -e "${PURPLE}Opções:${NC}"
     echo "  1) Baixar / Atualizar"
