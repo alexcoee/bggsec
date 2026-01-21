@@ -16,7 +16,7 @@ DOWNLOAD_DIR="${DOWNLOAD_DIR:-bggsec-tools}"
 TOOLS_FILE="${TOOLS_FILE:-./data/tools.tsv}"
 
 die() { echo -e "${RED}[x]${NC} $*" >&2; exit 1; }
-need_cmd() { command -v "$1" >/dev/null 2>&1 || die "Comando obrigat├│rio n├úo encontrado: $1"; }
+need_cmd() { command -v "$1" >/dev/null 2>&1 || die "Comando obrigatório não encontrado: $1"; }
 
 safe_dirname() {
   local s="$1"
@@ -38,12 +38,13 @@ repo_is_git_cloneable() {
 banner() {
   clear
   echo -e "${PURPLE}"
-  echo "  ÔûêÔûêÔûêÔûêÔûêÔûêÔòù  ÔûêÔûêÔûêÔûêÔûêÔûêÔòù  ÔûêÔûêÔûêÔûêÔûêÔûêÔòù ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔòùÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔòù ÔûêÔûêÔûêÔûêÔûêÔûêÔòù"
-  echo "  ÔûêÔûêÔòöÔòÉÔòÉÔûêÔûêÔòùÔûêÔûêÔòöÔòÉÔòÉÔòÉÔòÉÔòØ ÔûêÔûêÔòöÔòÉÔòÉÔòÉÔòÉÔòØ ÔûêÔûêÔòöÔòÉÔòÉÔòÉÔòÉÔòØÔûêÔûêÔòöÔòÉÔòÉÔòÉÔòÉÔòØÔûêÔûêÔòöÔòÉÔòÉÔòÉÔòÉÔòØ"
-  echo "  ÔûêÔûêÔûêÔûêÔûêÔûêÔòöÔòØÔûêÔûêÔòæ  ÔûêÔûêÔûêÔòùÔûêÔûêÔòæ  ÔûêÔûêÔûêÔòùÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔòùÔûêÔûêÔûêÔûêÔûêÔòù  ÔûêÔûêÔòæ     "
-  echo "  ÔûêÔûêÔòöÔòÉÔòÉÔûêÔûêÔòùÔûêÔûêÔòæ   ÔûêÔûêÔòæÔûêÔûêÔòæ   ÔûêÔûêÔòæÔòÜÔòÉÔòÉÔòÉÔòÉÔûêÔûêÔòæÔûêÔûêÔòöÔòÉÔòÉÔòØ  ÔûêÔûêÔòæ     "
-  echo "  ÔûêÔûêÔûêÔûêÔûêÔûêÔòöÔòØÔòÜÔûêÔûêÔûêÔûêÔûêÔûêÔòöÔòØÔòÜÔûêÔûêÔûêÔûêÔûêÔûêÔòöÔòØÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔòæÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔòùÔòÜÔûêÔûêÔûêÔûêÔûêÔûêÔòù"
-  echo "  ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ  ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ  ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòØÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ"
+  cat <<'EOF'
+  ____   ____  ____ ____  _____ ____
+ | __ ) / ___|/ ___/ ___|| ____/ ___|
+ |  _ \| |  _| |  _\___ \|  _|| |
+ | |_) | |_| | |_| |___) | |__| |___
+ |____/ \____|\____|____/|_____\____|
+EOF
   echo -e "${NC}"
   echo -e "  ${GREEN}${APP_NAME}${NC} ${CYAN}${VERSION}${NC}  |  Unified Tool Manager  |  ${YELLOW}Kali / Pentest${NC}"
   echo -e "  ------------------------------------------------------------"
@@ -54,7 +55,7 @@ banner() {
 
 # TSV: id, categoria, nome, dir, repo, run, desc
 tools_lines() {
-  [[ -f "$TOOLS_FILE" ]] || die "Arquivo n├úo encontrado: $TOOLS_FILE"
+  [[ -f "$TOOLS_FILE" ]] || die "Arquivo não encontrado: $TOOLS_FILE"
   awk -F'\t' '
     NR==1 {next}
     /^\s*$/ {next}
@@ -85,7 +86,7 @@ install_tool_by_line() {
   need_cmd git
 
   if ! repo_is_git_cloneable "$repo"; then
-    echo -e "${RED}[x]${NC} Repo n├úo clon├ível via git (.git ausente):"
+    echo -e "${RED}[x]${NC} Repo não clonável via git (.git ausente):"
     echo -e "    ${CYAN}${repo}${NC}"
     echo -e "${YELLOW}Dica:${NC} abra o link e pegue a URL de clone (.git)."
     return 1
@@ -120,7 +121,7 @@ remove_tool_dir() {
 open_tool_dir() {
   local dir="$1"
   local dest="${DOWNLOAD_DIR}/${dir}"
-  [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta n├úo instalada."; return 1; }
+  [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta não instalada."; return 1; }
   echo -e "${CYAN}Pasta:${NC} $dest"
 }
 
@@ -129,8 +130,8 @@ run_tool() {
   local run_cmd="$2"
 
   local dest="${DOWNLOAD_DIR}/${dir}"
-  [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta n├úo instalada."; return 1; }
-  [[ -n "$run_cmd" && "$run_cmd" != "-" ]] || { echo -e "${RED}[x]${NC} Sem comando de execu├º├úo definido."; return 1; }
+  [[ -d "$dest" ]] || { echo -e "${RED}[x]${NC} Ferramenta não instalada."; return 1; }
+  [[ -n "$run_cmd" && "$run_cmd" != "-" ]] || { echo -e "${RED}[x]${NC} Sem comando de execução definido."; return 1; }
 
   echo -e "${CYAN}[*]${NC} Executando em ${dest}"
   echo -e "${YELLOW}[*]${NC} Comando: ${run_cmd}"
@@ -171,7 +172,7 @@ search_tools() {
   if [[ "$pick" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$pick" || true)" ]]; then
     tool_screen "$pick" || true
   else
-    echo -e "${RED}[x]${NC} ID inv├ílido."
+    echo -e "${RED}[x]${NC} ID inválido."
     read -rp "ENTER..." _
   fi
 }
@@ -181,14 +182,14 @@ help_screen() {
   cat <<EOF
 ${GREEN}${APP_NAME}${NC} ajuda
 
-- Menu por op├º├Áes (1..5).
-- Voc├¬ pode abrir uma ferramenta digitando o ID quando estiver em:
+- Menu por opções (1..5).
+- Você pode abrir uma ferramenta digitando o ID quando estiver em:
   - Listagem
   - Busca
   - Instalados
 
 Dica:
-- No WSL/Windows, ferramentas wireless (monitor mode/inje├º├úo) podem n├úo funcionar.
+- No WSL/Windows, ferramentas wireless (monitor mode/injeção) podem não funcionar.
 
 EOF
   read -rp "ENTER para voltar..." _
@@ -215,7 +216,7 @@ install_update_all() {
         git clone "$repo" "$dest" || echo -e "${RED}[x]${NC} Falhou: $name"
       fi
     else
-      echo -e "${RED}[x]${NC} Repo n├úo clon├ível (sem .git): ${repo}"
+      echo -e "${RED}[x]${NC} Repo não clonável (sem .git): ${repo}"
     fi
     echo ""
   done < <(tools_lines)
@@ -252,7 +253,7 @@ tool_screen() {
     echo -e "${YELLOW}Run:${NC}  ${CYAN}${run}${NC}"
     echo -e "${YELLOW}Dir:${NC}  ${CYAN}${dest}${NC}"
     echo ""
-    echo -e "${PURPLE}Op├º├Áes:${NC}"
+    echo -e "${PURPLE}Opções:${NC}"
     echo "  1) Baixar / Atualizar"
     echo "  2) Executar"
     echo "  3) Mostrar pasta"
@@ -274,7 +275,7 @@ tool_screen() {
         ;;
       2)
         if [[ "$st" != "INSTALADA" ]]; then
-          echo -e "${RED}[x]${NC} Instale primeiro (op├º├úo 1)."
+          echo -e "${RED}[x]${NC} Instale primeiro (opção 1)."
         else
           run_tool "$dir" "$run" || true
         fi
@@ -289,13 +290,13 @@ tool_screen() {
         read -rp "ENTER..." _
         ;;
       9) return 0 ;;
-      0) echo "At├® a pr├│xima!"; exit 0 ;;
-      *) echo -e "${RED}[x]${NC} Op├º├úo inv├ílida."; read -rp "ENTER..." _ ;;
+      0) echo "Até a próxima!"; exit 0 ;;
+      *) echo -e "${RED}[x]${NC} Opção inválida."; read -rp "ENTER..." _ ;;
     esac
   done
 }
 
-# --- Tela Instalados: lista numerada s├│ dos baixados ---
+# --- Tela Instalados: lista numerada só dos baixados ---
 installed_screen() {
   while true; do
     banner
@@ -327,13 +328,13 @@ installed_screen() {
     read -rp "Escolha: " opt
     case "$opt" in
       9) return 0 ;;
-      0) echo "At├® a pr├│xima!"; exit 0 ;;
+      0) echo "Até a próxima!"; exit 0 ;;
       *)
         if [[ "$opt" =~ ^[0-9]+$ ]] && (( opt >= 1 && opt <= idx )); then
           local real_id="${ids[$((opt-1))]}"
           tool_screen "$real_id" || true
         else
-          echo -e "${RED}[x]${NC} Op├º├úo inv├ílida."
+          echo -e "${RED}[x]${NC} Opção inválida."
           read -rp "ENTER..." _
         fi
         ;;
@@ -369,13 +370,13 @@ main_menu() {
       3) install_update_all ;;
       4) installed_screen ;;
       5) help_screen ;;
-      0) echo "At├® a pr├│xima!"; exit 0 ;;
+      0) echo "Até a próxima!"; exit 0 ;;
       *)
-        # mensagem de erro se n├úo achar o ID
+        # mensagem de erro se não achar o ID
         if [[ "$opt" =~ ^[0-9]+$ ]] && [[ -n "$(tool_by_id "$opt" || true)" ]]; then
           tool_screen "$opt" || true
         else
-          echo -e "${RED}[x]${NC} Op├º├úo inv├ílida."
+          echo -e "${RED}[x]${NC} Opção inválida."
           read -rp "ENTER..." _
         fi
         ;;
